@@ -1,0 +1,106 @@
+[
+  {
+    "categoryName": "Pizza",
+    "name": "Margherita",
+    "imageUrl": "https://example.com/images/margherita.jpg",
+    "options": [
+      { "Regular": "199" },
+      { "Medium": "299" },
+      { "Large": "399" }
+    ],
+    "description": "Classic pizza topped with mozzarella and tomato sauce."
+  },
+  {
+    "categoryName": "Pizza",
+    "name": "Pepperoni",
+    "imageUrl": "https://example.com/images/pepperoni.jpg",
+    "options": [
+      { "Regular": "249" },
+      { "Medium": "349" },
+      { "Large": "449" }
+    ],
+    "description": "Pepperoni pizza with mozzarella, spicy sausage, and tomato sauce."
+  },
+  {
+    "categoryName": "Biryani",
+    "name": "Chicken Biryani",
+    "imageUrl": "https://example.com/images/chicken-biryani.jpg",
+    "options": [
+      { "Half": "159" },
+      { "Full": "279" }
+    ],
+    "description": "Aromatic basmati rice cooked with juicy chicken and spices."
+  },
+  {
+    "categoryName": "Biryani",
+    "name": "Veg Biryani",
+    "imageUrl": "https://example.com/images/veg-biryani.jpg",
+    "options": [
+      { "Half": "129" },
+      { "Full": "229" }
+    ],
+    "description": "Basmati rice cooked with mixed vegetables and aromatic spices."
+  },
+  {
+    "categoryName": "Burger",
+    "name": "Cheese Burger",
+    "imageUrl": "https://example.com/images/cheese-burger.jpg",
+    "options": [
+      { "Single": "149" },
+      { "Double": "199" }
+    ],
+    "description": "Grilled patty with melted cheese, lettuce, and tomato in a soft bun."
+  },
+  {
+    "categoryName": "Burger",
+    "name": "Veggie Burger",
+    "imageUrl": "https://example.com/images/veggie-burger.jpg",
+    "options": [
+      { "Single": "129" },
+      { "Double": "179" }
+    ],
+    "description": "Crispy veggie patty with fresh veggies and creamy sauce."
+  },
+  {
+    "categoryName": "Rolls",
+    "name": "Paneer Roll",
+    "imageUrl": "https://example.com/images/paneer-roll.jpg",
+    "options": [
+      { "Half": "99" },
+      { "Full": "169" }
+    ],
+    "description": "Paneer and veggies rolled in a warm paratha with sauces."
+  },
+  {
+    "categoryName": "Rolls",
+    "name": "Chicken Kathi Roll",
+    "imageUrl": "https://example.com/images/chicken-roll.jpg",
+    "options": [
+      { "Half": "119" },
+      { "Full": "199" }
+    ],
+    "description": "Spiced chicken wrapped in a flaky paratha with chutneys."
+  },
+  {
+    "categoryName": "Drinks",
+    "name": "Cold Coffee",
+    "imageUrl": "https://example.com/images/cold-coffee.jpg",
+    "options": [
+      { "Small": "89" },
+      { "Medium": "119" },
+      { "Large": "149" }
+    ],
+    "description": "Iced coffee blended with milk, sugar, and a scoop of vanilla ice cream."
+  },
+  {
+    "categoryName": "Drinks",
+    "name": "Lemon Soda",
+    "imageUrl": "https://example.com/images/lemon-soda.jpg",
+    "options": [
+      { "Small": "49" },
+      { "Medium": "69" },
+      { "Large": "89" }
+    ],
+    "description": "Refreshing fizzy drink with lemon juice and mint."
+  }
+]
