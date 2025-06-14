@@ -52,6 +52,8 @@ function UserApi(token) {
             name: res.data.data.name,
             email: res.data.data.email,
             address: res.data.data.address,
+            profilePic: res.data.data.profilePicture,
+            mobile: res.data.data.mobile,
           });
           console.log("User info:", res.data);
           await getCart(); 
@@ -105,7 +107,42 @@ function UserApi(token) {
       }
     }
   };
+  const getFavorites = async()=>{
+    try {
+      const id = localStorage.getItem("userId");
+      const res = await axios.get(`http://localhost:8000/user/favorites/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      return res.data.data || []; 
+    } catch (err) {
+      console.error("Failed to fetch favorites:", err.message);
+      return [];
+    }
+  }
+  const addToFavorites = async (foodItemId) => {
+    if (!isLogged) {
+      alert("Please login to add to favorites");
+      return;
+    }
 
+    const id = localStorage.getItem("userId");
+
+    try {
+      await axios.post(
+        `http://localhost:8000/user/favorites/${id}`,
+        { foodItemId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+      alert("Added to favorites successfully.");
+    } catch (err) {
+      console.error("Error adding to favorites:", err.message);
+      alert("Failed to add to favorites.");
+    }
+  }
   return {
     isLogged,
     isAdmin,
@@ -113,7 +150,10 @@ function UserApi(token) {
     setCart,
     cartLoading,
     infor,
+    setInfor,
     getCart,
+    getFavorites,
+    addToFavorites,
     addToCart,
     getCart, // optional if needed elsewhere
   };

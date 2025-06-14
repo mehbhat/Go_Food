@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const fileUpload = require('express-fileupload');
 const cookieParser = require("cookie-parser");
 const app = express();
 
@@ -12,9 +13,15 @@ app.use(cors({
   credentials: true, // Allow credentials (cookies)
 }));
 app.use(express.json());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+); // Enable file upload middleware
 //routes
 app.use("/fooditems", require("./routes/foodItemRoutes.js"));
 app.use("/user", require("./routes/UserRoutes.js"));
+app.use("/upload", require("./routes/upload.js"));
 app.use("/restaurants", require("./routes/RestaurantRoutes.js"));
 app.use("/offers", require("./routes/OfferRoutes.js"));
 app.use("/order", require("./routes/OrderRoutes.js"));

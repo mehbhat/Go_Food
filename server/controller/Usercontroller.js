@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
     const refreshtoken = createRefreshToken({ id: user._id });
     res.cookie("refreshtoken", refreshtoken, {
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 1 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
