@@ -3,7 +3,7 @@ const Restaurant = require("../models/RestaurantModel");
 // Create a new restaurant
 exports.createRestaurant = async (req, res) => {
   try {
-    const { name, address, cuisine, rating, isActive, createdBy } = req.body;
+    const { name, address, cuisine, rating } = req.body;
 
     // Check for existing restaurant by name
     const existing = await Restaurant.findOne({ name });
@@ -15,9 +15,7 @@ exports.createRestaurant = async (req, res) => {
       name,
       address,
       cuisine,
-      rating,
-      isActive,
-      createdBy,
+      rating
     });
 
     res.status(201).json({

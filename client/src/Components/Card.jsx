@@ -1,11 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalState } from "../GlobalState/GlobalState";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 function Card() {
   const [fooditems, setFooditems] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [liked, setLiked] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   const state = useContext(GlobalState);
-  const { cart = [], addToCart, isLogged } = state?.UserAPI || {};
+  const {
+    cart = [],
+    addToCart,
+    isLogged,
+    addToFavorites,
+    getFavorites,
+  } = state?.UserAPI || {};
 
   console.log("addToCart exists?", typeof addToCart);
   useEffect(() => {
@@ -33,7 +42,18 @@ function Card() {
       (cartItem) => cartItem._id === itemId && cartItem.variant === variant
     );
   };
-
+  const handleAddToFavorites = async (foodItemId) => {
+    setLiked(!liked);
+    try {
+      await addToFavorites(foodItemId);
+      console.log("Added to favorites:", foodItemId);
+      const updatedFavorites = await getFavorites();
+      setFavorites(updatedFavorites);
+    } catch (err) {
+      console.error("Error adding to favorites:", err.message);
+      alert("Failed to add to favorites.");
+    }
+  };
   return (
     <div className="pt-20 px-4 md:px-8 lg:px-16 max-w-screen-xl mx-auto">
       <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">
@@ -56,8 +76,15 @@ function Card() {
           return (
             <div
               key={item._id}
-              className="bg-white rounded-xl overflow-hidden shadow-lg border dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl transition-all"
+              className=" relative bg-white rounded-xl overflow-hidden shadow-lg border dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl transition-all"
             >
+              <button
+                className="absolute top-2 right-2 z-10 text-gray-500 hover:text-red-500"
+                onClick={() => handleAddToFavorites(item._id)}
+              >
+                {liked ? <FaHeart /> : <FaRegHeart />}
+              </button>
+
               <img
                 className="w-full h-48 object-cover"
                 src={item.image || "/images/burger.jpg"}

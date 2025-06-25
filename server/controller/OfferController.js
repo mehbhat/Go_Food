@@ -6,11 +6,20 @@ exports.createOffer = async (req, res) => {
   try {
     const offer = new Offer(req.body);
     await offer.save();
-    res.status(201).json(offer);
+
+    // Populate restaurant after saving
+    const populatedOffer = await Offer.findById(offer._id).populate("restaurant");
+
+    res.status(201).json({
+      msg: "Offer created successfully",
+      data: populatedOffer, // ✅ Send back populated data
+    });
   } catch (err) {
+    console.error("Create Offer Error:", err.message);
     res.status(400).json({ error: err.message });
   }
 };
+
 
 // Get all offers
 exports.getAllOffers = async (req, res) => {
@@ -44,7 +53,7 @@ exports.updateOffer = async (req, res) => {
       req.params.id,
       req.body,
       { new: true }
-    );
+    ).populate("restaurant");
     if (!updatedOffer)
       return res.status(404).json({ error: "Offer not found" });
     res.status(200).json({

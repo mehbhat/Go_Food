@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { GlobalState } from "../GlobalState/GlobalState"; // adjust the path based on your project
 
 function Cart() {
   const state = useContext(GlobalState);
   const { cart = [], setCart, cartLoading, getCart } = state?.UserAPI || {};
+  const token = state?.token || ""; // Ensure you have the token from context or props
   // const [cartLoading, setCartLoading] = useState(false);
 
   useEffect(() => {
-  if (typeof getCart === "function") {
-    getCart();
-  } else {
-    console.error("getCart is not a function!", getCart);
-  }
-}, []);
+    if (typeof getCart === "function") {
+      getCart();
+    } else {
+      console.error("getCart is not a function!", getCart);
+    }
+  }, []);
 
   // Calculate total price — if each item has a variant-based price, you may need to look it up
   const getTotal = () => {
@@ -42,9 +44,42 @@ function Cart() {
   };
 
   // Remove item
-  const removeItem = (id) => {
-    const newCart = cart.filter((item) => item._id !== id);
-    setCart(newCart);
+  const removeItem = async (id) => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const res = await axios.delete(
+        `http://localhost:8000/user/removeFromCart/${userId}/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+      console.log("Item deleted from backend:", res.data);
+
+      if (typeof getCart === "function") {
+        await getCart();
+        console.log("cart after deletion:", cart);
+      }
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+    }
+  };
+  const emptyCart = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const res = await axios.patch(
+        `http://localhost:8000/user/emptyCart/${userId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+      console.log("Cart emptied:", res.data);
+      setCart([]); // Clear the cart in state
+    } catch (err) {
+      console.error("Failed to empty cart:", err);
+    }
   };
 
   if (cartLoading) {
@@ -90,6 +125,12 @@ function Cart() {
             );
           })}
           <h3>Total: ₹{getTotal()}</h3>
+          <button
+            onClick={emptyCart}
+            style={{ backgroundColor: "red", color: "white", padding: "10px 20px" }}
+          >
+            Empty Cart
+          </button>
           <Link to="/checkout">
             <button style={{ marginTop: "20px", padding: "10px 20px" }}>
               Proceed to Checkout

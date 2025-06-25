@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
+      setIsAdmin(localStorage.getItem("role") === "admin");
     } else {
       setIsLoggedIn(false);
     }
@@ -114,30 +116,30 @@ function Navbar() {
               {/* About */}
               <li>
                 <Link
-                  to="/about"
+                  to="/restaurants"
                   className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 md:p-0 transition-colors duration-200"
                 >
-                  About
+                  Restaurants
                 </Link>
               </li>
 
-              {/* Services */}
+              {/* Offers */}
               <li>
                 <Link
-                  to="/services"
+                  to="/offers"
                   className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 md:p-0 transition-colors duration-200"
                 >
-                  Services
+                  Offers
                 </Link>
               </li>
 
               {/* Contact */}
               <li>
                 <Link
-                  to="/contact"
+                  to={isAdmin ? "/all-users" : "/contact"}
                   className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-600 md:p-0 transition-colors duration-200"
                 >
-                  Contact
+                  {isAdmin ? "All Users" : "Contact"}
                 </Link>
               </li>
             </ul>

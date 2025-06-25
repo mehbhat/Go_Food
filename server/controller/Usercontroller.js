@@ -68,6 +68,8 @@ exports.login = async (req, res) => {
         _id: user._id,
         email: user.email,
         accesstoken,
+        name: user.name,
+        role: user.role,
       },
     });
   } catch (err) {
@@ -305,6 +307,25 @@ exports.getCart = async(req, res) => {
     return res.status(500).json({ msg: err.message });
   }
 }
+// controller/userController.js
+exports.removeFromCart = async (req, res) => {
+  const { id, foodItemId } = req.params;
+
+  try {
+    const user = await UserModel.findById(id);
+    if (!user) return res.status(404).json({ msg: "User not found." });
+
+    user.cart = user.cart.filter(
+      (item) => item.foodItem.toString() !== foodItemId
+    );
+
+    await user.save();
+
+    res.json({ msg: "Item removed from cart successfully." });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
 exports.emptyCart = async (req, res) => {
   try {
     const user = await UserModel.findByIdAndUpdate(
@@ -329,6 +350,6 @@ const createAccessToken = (user) => {
 };
 const createRefreshToken = (user) => {
   return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "1d",
   });
 };

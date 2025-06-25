@@ -31,10 +31,12 @@ router.get("/favorites/:id", auth, UserController.getFavorite);
 
 router.patch("/addToCart/:id", auth, UserController.addToCart);
 
+
 router.patch("/emptyCart/:id", auth, UserController.emptyCart);
 
 router.post("/favorites/:id", auth, UserController.addFavorite);
 
+router.delete("/removeFromCart/:id/:foodItemId", auth, UserController.removeFromCart);
 router.delete(
   "/favorites/:id/:foodItemId",
   auth,

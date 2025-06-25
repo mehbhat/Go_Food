@@ -7,7 +7,7 @@ function UserApi(token) {
   const [cartLoading, setCartLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [infor, setInfor] = useState({});
-
+  const [users, setUsers] = useState([]);
   const getCart = async () => {
     setCartLoading(true);
     try {
@@ -47,7 +47,7 @@ function UserApi(token) {
           });
 
           setIsLogged(true);
-          setIsAdmin(res.data.role === "admin");
+          setIsAdmin(res.data.data.role === "admin");         
           setInfor({
             name: res.data.data.name,
             email: res.data.data.email,
@@ -70,6 +70,17 @@ function UserApi(token) {
     }
   }, [token]);
 
+  const getUsers = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/user", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      setUsers(res.data.data || []);
+    } catch (err) {
+      console.error("Failed to fetch users:", err.message);
+    }
+  };
   const addToCart = async (product, quantity) => {
     if (!isLogged) {
       alert("Please login to be able to shop");
@@ -131,7 +142,7 @@ function UserApi(token) {
     try {
       await axios.post(
         `http://localhost:8000/user/favorites/${id}`,
-        { foodItemId },
+        { favorites: foodItemId },
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -147,6 +158,8 @@ function UserApi(token) {
     isLogged,
     isAdmin,
     cart,
+    users,
+    getUsers,
     setCart,
     cartLoading,
     infor,

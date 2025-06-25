@@ -2,6 +2,8 @@ import { createContext, useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import UserApi from "../API/UserAPI";
+import RestaurantsAPI from "../API/RestaurantsAPI";
+import OffersAPI from "../API/OffersAPI";
 
 export const GlobalState = createContext();
 export const GlobalProvider = ({ children }) => {
@@ -37,6 +39,8 @@ export const GlobalProvider = ({ children }) => {
     token,
     setToken: setToken,
     UserAPI: UserApi(token),
+    RestaurantsAPI: RestaurantsAPI(token),
+    OffersAPI: OffersAPI(token),
   };
   return (
     <GlobalState.Provider value={SaidData}>

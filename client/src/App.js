@@ -6,6 +6,12 @@ import Register from "./Pages/Register";
 // import { GlobalProvider } from "./GlobalState/GlobalState";
 import MyProfile from "./Pages/MyProfile";
 import Cart from './Components/Cart';
+import Restaurant from "./Pages/Restaurant";
+import RestaurantDetails from "./Components/RestaurantDetails";
+import Checkout from "./Pages/Checkout";
+import ContactUs from "./Pages/ContactUs";
+import AllUser from "./Pages/AllUser";
+import Offers from "./Pages/Offers";
 
 function App() {
   return (
@@ -16,8 +22,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path ="/cart" element={<Cart />} />
-            <Route path = "/profile" element = {<MyProfile/>}/>
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<MyProfile />} />
+            <Route path="/restaurants" element={<Restaurant />} />
+            <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/all-users" element={<AllUser />} />
+            <Route path="/offers" element={<Offers />} />
+            {/* Add more routes as needed */}
           </Routes>
         </div>
       </BrowserRouter>

@@ -21,6 +21,7 @@ function Login() {
       console.log("Response from server: ", token.data);
       localStorage.setItem("token", token.data.user.accesstoken);
       localStorage.setItem("userId", token.data.user._id);
+      localStorage.setItem("role", token.data.user.role);
       if (!token.data.user.accesstoken) throw new Error("Invalid token");
       // localStorage.setItem("user", JSON.stringify(token.data.user));
       setLoggedin(true);
